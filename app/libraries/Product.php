@@ -2,19 +2,16 @@
 namespace app\libraries;
 
 class Product{
-    private string $name;
-    private string $cpf;
-    private float $rendimento;
-    private string $aliquota;
-    private string $valorImposto;
+    private $name;
+    private $cpf;
+    private $rendimento;
+    private $aliquota;
 
-    public function __construct(String $name, string $cpf, float $rendimento, string $aliquota, string $valorImposto)
+    public function __construct($name, $cpf, $rendimento)
     {
         $this->name = $name;
         $this->cpf = $cpf;
         $this->rendimento = $rendimento;
-        $this->aliquota = $aliquota;
-        $this->valorImposto = $valorImposto;
     }
 
         public function setName($name){
@@ -41,20 +38,25 @@ class Product{
             return $this->rendimento;
         }
 
-        public function setAliquota($aliquota){
-            $this->aliquota = $aliquota;
+        public function calculoAliquota($rendimento){
+            if ($rendimento <= 22847.76){
+                return 0;
+            }else if ($rendimento <= 33919.80){
+                return 7.5;
+            }else if ($rendimento <= 45012.60){
+                return 15;  
+            }else if ($rendimento <= 55976.16){
+                return 22.5;
+            }else {
+                return 27.5;
+            }
         }
 
-        public function getAliquota(){
-            return $this->aliquota;
+        public function calculoImposto($rendimento, $aliquota){
+            $imposto = ($rendimento * $aliquota) / 100;
+            return $imposto = number_format($imposto, 2, '.', '');
+            
         }
 
-        public function setValorImposto($valorImposto){
-            $this->valorImposto = $valorImposto;
-        }
-
-        public function getValorImposto(){
-            return $this->valorImposto;
-        }
     } 
 ?>
